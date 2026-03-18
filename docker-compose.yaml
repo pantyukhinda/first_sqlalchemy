@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${APP_CONFIG__DB__NAME}
+      POSTGRES_USER: ${APP_CONFIG__DB__USER}
+      POSTGRES_PASSWORD: ${APP_CONFIG__DB__PASSWORD}
+    volumes:
+      - ./volumes/postgres-data:/var/lib/postgresql/data
+    ports:
+      - "${APP_CONFIG__DB__PORT}:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${APP_CONFIG__DB__USER} -d ${APP_CONFIG__DB__NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+        compress: "true"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    name: app_network
