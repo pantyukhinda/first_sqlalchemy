@@ -1,10 +1,11 @@
 from sqlalchemy import text
 
-from core.database import async_engine, sync_engine
+from core.database import database
 
 
+# TODO: Переписать весь код на использование сессий вместо движка
 def sync_exec(stmt):
-    with sync_engine.connect() as conn:
+    with database.sync_engine.connect() as conn:
         result = conn.execute(stmt)
         conn.commit()
         try:
@@ -14,7 +15,7 @@ def sync_exec(stmt):
 
 
 async def async_exec(stmt):
-    async with async_engine.connect() as conn:
+    async with database.async_engine.connect() as conn:
         result = await conn.execute(stmt)
         await conn.commit()
         try:
@@ -24,12 +25,12 @@ async def async_exec(stmt):
 
 
 def sync_query(query):
-    with sync_engine.connect() as conn:
+    with database.sync_engine.connect() as conn:
         result = conn.execute(query)
         return result.all()
 
 
 async def async_query(query):
-    async with async_engine.connect() as conn:
+    async with database.async_engine.connect() as conn:
         result = await conn.execute(query)
         return result.all()

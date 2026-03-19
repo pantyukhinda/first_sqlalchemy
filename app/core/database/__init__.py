@@ -1,6 +1,5 @@
-from .database import sync_engine, async_engine
+from .database import database
 
 __all__ = [
-    "sync_engine",
-    "async_engine",
+    "database",
 ]
