@@ -1,42 +1,45 @@
 import asyncio
+from pprint import pprint
+from sqlalchemy import select, update
 
-
-from workers import Workers, Resumes
-from core.crud import create_tables, sync_add, async_add
+from core.crud import (
+    create_tables,
+    sync_add,
+    async_add,
+    async_query,
+    async_exec,
+)
+from models import Resumes
+from data import Data
 
 
 if __name__ == "__main__":
     create_tables()
+    sync_add(Data.workers_data)
 
-    worker_ivan: Workers = Workers(name="Ivan")
-    worker_stepan: Workers = Workers(name="Stepan")
 
-    resume_ivan: Resumes = Resumes(
-        title="Ivan's resume",
-        compensation=100_000,
-        workload="parttime",
-        worker_id=1,
+async def main():
+    task01 = async_add(Data.resumes_data)
+    task02 = async_query(select(Resumes))
+
+    await task01
+    resumes = await task02
+
+    for r in resumes:
+        pprint(vars(r))
+
+    task03 = async_exec(
+        update(Resumes).values(title="STEPAN'S RESUME").filter_by(worker_id=2)
     )
 
-    resume_stepan: Resumes = Resumes(
-        title="Stepan's resume",
-        compensation=150_000,
-        workload="fulltime",
-        worker_id=2,
-    )
+    await task03
 
-    sync_add(
-        [
-            worker_ivan,
-            worker_stepan,
-        ]
-    )
+    task04 = async_query(select(Resumes))
 
-    asyncio.run(
-        async_add(
-            [
-                resume_ivan,
-                resume_stepan,
-            ]
-        )
-    )
+    resumes = await task04
+
+    for r in resumes:
+        pprint(vars(r))
+
+
+asyncio.run(main())
