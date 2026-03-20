@@ -13,3 +13,15 @@ async def async_add(data: list):
     async with database.async_session_factory() as session:
         session.add_all(data)
         await session.commit()
+
+
+async def async_query(query):
+    async with database.async_session_factory() as session:
+        result = await session.execute(query)
+        return result.scalars().all()
+
+
+async def async_exec(query):
+    async with database.async_session_factory() as session:
+        await session.execute(query)
+        await session.commit()
