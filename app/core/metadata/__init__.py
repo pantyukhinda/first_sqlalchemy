@@ -1,3 +1,3 @@
-from .metadata import metadata_obj
+from .metadata import Base
 
-__all__ = ["metadata_obj"]
+__all__ = ["Base"]

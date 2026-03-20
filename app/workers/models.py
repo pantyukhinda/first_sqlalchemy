@@ -1,10 +1,10 @@
-from sqlalchemy import Table, Column, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
 
-from core.metadata import metadata_obj
+from core.metadata import Base
 
-workers = Table(
-    "workers",
-    metadata_obj,
-    Column("id", Integer, primary_key=True),
-    Column("name", String),
-)
+
+class Workers(Base):
+    __tablename__ = "workers"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column()

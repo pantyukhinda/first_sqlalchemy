@@ -1,10 +1,7 @@
-from .exec_stmt import sync_exec, async_exec, sync_query, async_query
-from .table_manager import create_tables
+from .create_tables import create_tables
+from .crud import sync_add
 
 __all__ = [
-    "sync_exec",
-    "async_exec",
-    "sync_query",
-    "async_query",
+    "sync_add",
     "create_tables",
 ]
