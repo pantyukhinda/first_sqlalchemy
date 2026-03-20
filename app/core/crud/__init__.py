@@ -1,8 +1,10 @@
 from .create_tables import create_tables
-from .crud import sync_add, async_add
+from .crud import sync_add, async_add, async_query, async_exec
 
 __all__ = [
     "create_tables",
     "sync_add",
     "async_add",
+    "async_query",
+    "async_exec",
 ]
