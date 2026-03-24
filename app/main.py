@@ -1,6 +1,5 @@
 import asyncio
 from pprint import pprint
-from sqlalchemy import select, update
 
 from core.crud import (
     create_tables,
@@ -8,38 +7,42 @@ from core.crud import (
     async_add,
     async_query,
     async_exec,
+    sync_exec,
 )
-from models import Resumes
 from data import Data
-
+from queries import Queries
 
 if __name__ == "__main__":
     create_tables()
     sync_add(Data.workers_data)
+    sync_add(Data.resumes_data)
 
 
 async def main():
-    task01 = async_add(Data.resumes_data)
-    task02 = async_query(select(Resumes))
 
-    await task01
-    resumes = await task02
-
-    for r in resumes:
-        pprint(vars(r))
-
-    task03 = async_exec(
-        update(Resumes).values(title="STEPAN'S RESUME").filter_by(worker_id=2)
+    print(
+        Queries.select_resumes_by_workload().compile(
+            compile_kwargs={"literal_binds": True}
+        )
     )
 
-    await task03
+    task03 = async_query(Queries.select_resumes_by_workload())
+    resumes = await task03
 
-    task04 = async_query(select(Resumes))
+    for r in resumes:
+        pprint(r)
 
+    print(
+        Queries.join_cte_subquery_window_func().compile(
+            compile_kwargs={"literal_binds": True}
+        )
+    )
+
+    task04 = async_query(Queries.join_cte_subquery_window_func())
     resumes = await task04
 
     for r in resumes:
-        pprint(vars(r))
+        pprint(r)
 
 
 asyncio.run(main())
