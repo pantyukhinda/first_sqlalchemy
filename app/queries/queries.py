@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, and_, cast, func, select
-from sqlalchemy.orm import aliased, joinedload
+from sqlalchemy.orm import aliased, joinedload, selectinload
 from models import Resumes, Workers
 
 
@@ -57,5 +57,13 @@ class Queries:
     @staticmethod
     def select_workers_with_joined_relationship():
         workers_with_relationship = select(Workers).options(joinedload(Workers.resume))
+
+        return workers_with_relationship
+
+    @staticmethod
+    def select_workers_with_selectinload_relationship():
+        workers_with_relationship = select(Workers).options(
+            selectinload(Workers.resume)
+        )
 
         return workers_with_relationship

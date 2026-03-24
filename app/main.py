@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
 
 async def main():
-
+    # * select_resumes_by_workload
     print(
         Queries.select_resumes_by_workload().compile(
             compile_kwargs={"literal_binds": True}
@@ -34,6 +34,7 @@ async def main():
     for r in resumes:
         pprint(r)
 
+    # * join_cte_subquery_window_func
     print(
         Queries.join_cte_subquery_window_func().compile(
             compile_kwargs={"literal_binds": True}
@@ -46,6 +47,7 @@ async def main():
     for r in resumes:
         pprint(r)
 
+    # * select_workers_with_joined_relationship
     print(
         Queries.select_workers_with_joined_relationship().compile(
             compile_kwargs={"literal_binds": True}
@@ -56,6 +58,22 @@ async def main():
 
     for r in resumes:
         pprint(vars(r[0]))
+
+    # * select_workers_with_selectinload_relationship
+
+    print(
+        Queries.select_workers_with_selectinload_relationship().compile(
+            compile_kwargs={"literal_binds": True}
+        )
+    )
+    task06 = async_query_unique(Queries.select_workers_with_selectinload_relationship())
+    resumes = await task06
+
+    for r in resumes:
+        pprint(r)
+
+    for r in resumes:
+        pprint(r[0].resume)
 
 
 asyncio.run(main())
