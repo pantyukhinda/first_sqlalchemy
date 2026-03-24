@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, and_, cast, func, select
-from sqlalchemy.orm import aliased
+from sqlalchemy.orm import aliased, joinedload
 from models import Resumes, Workers
 
 
@@ -53,3 +53,9 @@ class Queries:
         query = select(cte).order_by(cte.c.compensation_diff.desc())
 
         return query
+
+    @staticmethod
+    def select_workers_with_joined_relationship():
+        workers_with_relationship = select(Workers).options(joinedload(Workers.resume))
+
+        return workers_with_relationship
