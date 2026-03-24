@@ -8,7 +8,9 @@ from core.crud import (
     async_query,
     async_exec,
     sync_exec,
+    async_query_unique,
 )
+
 from data import Data
 from queries import Queries
 
@@ -43,6 +45,17 @@ async def main():
 
     for r in resumes:
         pprint(r)
+
+    print(
+        Queries.select_workers_with_joined_relationship().compile(
+            compile_kwargs={"literal_binds": True}
+        )
+    )
+    task05 = async_query_unique(Queries.select_workers_with_joined_relationship())
+    resumes = await task05
+
+    for r in resumes:
+        pprint(vars(r[0]))
 
 
 asyncio.run(main())
