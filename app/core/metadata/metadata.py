@@ -20,4 +20,4 @@ class Base(DeclarativeBase):
 
     def __repr__(self):
         cols = [f"{col}={getattr(self, col)}" for col in self.__table__.columns.keys()]
-        return f"<{self.__class__.__name__} {', '.join(cols)}>"
+        return f"<{self.__class__.__name__}. {', '.join(cols)}>"

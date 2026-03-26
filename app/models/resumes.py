@@ -20,4 +20,5 @@ class Resumes(Base):
     created_at: Mapped[created_at]
     updated_ad: Mapped[update_at]
 
-    worker: Mapped["Workers"] = relationship()
+    # relationship
+    worker: Mapped["Workers"] = relationship(back_populates="resumes")

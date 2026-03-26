@@ -5,6 +5,26 @@ from models import Resumes, Workers
 
 class Queries:
     @staticmethod
+    def select_workers():
+        select_workers = select(Workers)
+        return select_workers
+
+    @staticmethod
+    def select_workers_with_relation_selectinload():
+        select_workers = select(Workers).options(selectinload(Workers.resumes))
+        return select_workers
+
+    @staticmethod
+    def select_workers_with_relation_joinedload():
+        select_workers = select(Workers).options(joinedload(Workers.resumes))
+        return select_workers
+
+    @staticmethod
+    def select_resumes():
+        select_resumes = select(Resumes)
+        return select_resumes
+
+    @staticmethod
     def select_resumes_by_workload():
         select_resumes = (
             select(
@@ -56,14 +76,14 @@ class Queries:
 
     @staticmethod
     def select_workers_with_joined_relationship():
-        workers_with_relationship = select(Workers).options(joinedload(Workers.resume))
+        workers_with_relationship = select(Workers).options(joinedload(Workers.resumes))
 
         return workers_with_relationship
 
     @staticmethod
     def select_workers_with_selectinload_relationship():
         workers_with_relationship = select(Workers).options(
-            selectinload(Workers.resume)
+            selectinload(Workers.resumes)
         )
 
         return workers_with_relationship

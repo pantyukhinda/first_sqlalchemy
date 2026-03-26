@@ -13,4 +13,5 @@ class Workers(Base):
 
     name: Mapped[str] = mapped_column()
 
-    resume: Mapped[list["Resumes"]] = relationship()
+    # relationship
+    resumes: Mapped[list["Resumes"]] = relationship(back_populates="worker")
