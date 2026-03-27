@@ -43,3 +43,9 @@ async def async_query_unique(query):
     async with database.async_session_factory() as session:
         result = await session.execute(query)
         return result.unique().all()
+
+
+async def async_query_unique_scalars(query):
+    async with database.async_session_factory() as session:
+        result = await session.execute(query)
+        return result.unique().scalars().all()

@@ -6,6 +6,7 @@ from .crud import (
     sync_query,
     async_query,
     async_query_unique,
+    async_query_unique_scalars,
     async_exec,
 )
 
@@ -17,5 +18,6 @@ __all__ = [
     "sync_query",
     "async_query",
     "async_query_unique",
+    "async_query_unique_scalars",
     "async_exec",
 ]
