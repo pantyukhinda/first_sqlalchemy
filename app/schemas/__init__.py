@@ -1,5 +1,5 @@
-from .resume import ResumesBase, ResumesCreate, ResumesResponse, ResumesRelation
-from .worker import WorkersBase, WorkersCreate, WorkersResponse, WorkersRelation
+from .resumes import ResumesBase, ResumesCreate, ResumesResponse, ResumesRelation
+from .workers import WorkersBase, WorkersCreate, WorkersResponse, WorkersRelation
 
 
 __all__ = [
@@ -12,3 +12,6 @@ __all__ = [
     "WorkersResponse",
     "WorkersRelation",
 ]
+
+WorkersRelation.model_rebuild()
+ResumesRelation.model_rebuild()

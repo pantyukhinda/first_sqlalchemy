@@ -1,8 +1,6 @@
-from typing import TYPE_CHECKING
-from pydantic import BaseModel
+from __future__ import annotations
 
-if TYPE_CHECKING:
-    from . import ResumesResponse
+from pydantic import BaseModel
 
 
 class WorkersBase(BaseModel):

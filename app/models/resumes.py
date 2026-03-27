@@ -18,7 +18,7 @@ class Resumes(Base):
     workload: Mapped[Workload]
     worker_id: Mapped[int] = mapped_column(ForeignKey("workers.id"))
     created_at: Mapped[created_at]
-    updated_ad: Mapped[update_at]
+    updated_at: Mapped[update_at]
 
     # relationship
     worker: Mapped["Workers"] = relationship(back_populates="resumes")

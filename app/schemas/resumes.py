@@ -1,11 +1,9 @@
+from __future__ import annotations
+
 from datetime import datetime
-from typing import TYPE_CHECKING
 from pydantic import BaseModel
 
 from models import Workload
-
-if TYPE_CHECKING:
-    from . import WorkersResponse
 
 
 class ResumesBase(BaseModel):
@@ -22,7 +20,7 @@ class ResumesCreate(ResumesBase):
 class ResumesResponse(ResumesBase):
     id: int
     created_at: datetime
-    updated_ad: datetime
+    updated_at: datetime
 
 
 class ResumesRelation(ResumesResponse):
