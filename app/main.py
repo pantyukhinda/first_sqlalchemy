@@ -116,7 +116,7 @@ async def main():
         for worker in resumes_rel
     ]
     for w in resumes_rel_dto:
-        print(f"{w=}")
+        pprint(w.model_dump())
 
 
 asyncio.run(main())
