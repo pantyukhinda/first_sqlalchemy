@@ -1,4 +1,4 @@
-from models import Workers, Resumes
+from models import Workers, Resumes, Vacancies
 
 
 class Data:
@@ -38,5 +38,20 @@ class Data:
             compensation=100_000,
             workload="fulltime",
             worker_id=3,
+        ),
+    ]
+
+    vacancies_data: list[Vacancies] = [
+        Vacancies(
+            title="Backend developer",
+            compensation=100_000,
+        ),
+        Vacancies(
+            title="Frontend developer",
+            compensation=80_000,
+        ),
+        Vacancies(
+            title="Fullstack developer",
+            compensation=120_000,
         ),
     ]
