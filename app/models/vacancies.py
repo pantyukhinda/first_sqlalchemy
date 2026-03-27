@@ -1,7 +1,12 @@
+from typing import TYPE_CHECKING, Optional
+
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.metadata import Base
+
+if TYPE_CHECKING:
+    from . import Resumes
 
 
 class Vacancies(Base):
@@ -9,6 +14,12 @@ class Vacancies(Base):
 
     title: Mapped[str]
     compensation: Mapped[int | None]
+
+    # relationships
+    resumes_replied: Mapped[list["Resumes"]] = relationship(
+        back_populates="vacancies_replied",
+        secondary="vacancies_replies",
+    )
 
 
 class VacanciesReplies(Base):
@@ -27,4 +38,4 @@ class VacanciesReplies(Base):
         primary_key=True,
     )
 
-    cover_letter: Mapped[str | None]
+    cover_letter: Mapped[Optional[str]] = mapped_column(nullable=True)
