@@ -27,6 +27,12 @@ async def async_exec(query):
         await session.commit()
 
 
+def sync_query(query):
+    with database.session_factory() as session:
+        result = session.execute(query)
+        return result.scalars().all()
+
+
 async def async_query(query):
     async with database.async_session_factory() as session:
         result = await session.execute(query)
