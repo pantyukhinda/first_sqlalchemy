@@ -1,6 +1,6 @@
 from sqlalchemy import Integer, and_, cast, func, select
 from sqlalchemy.orm import aliased, joinedload, selectinload
-from models import Resumes, Workers
+from models import Resumes, Workers, Vacancies
 
 
 class Queries:
@@ -20,8 +20,18 @@ class Queries:
         return select_workers
 
     @staticmethod
+    def select_vacancies_filter_by(**kwargs):
+        select_vacancies = select(Vacancies).filter_by(**kwargs)
+        return select_vacancies
+
+    @staticmethod
     def select_resumes():
         select_resumes = select(Resumes)
+        return select_resumes
+
+    @staticmethod
+    def select_resumes_filter_by(**kwargs):
+        select_resumes = select(Resumes).filter_by(**kwargs)
         return select_resumes
 
     @staticmethod
