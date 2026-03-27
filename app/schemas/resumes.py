@@ -25,3 +25,4 @@ class ResumesResponse(ResumesBase):
 
 class ResumesRelation(ResumesResponse):
     worker: "WorkersResponse"
+    vacancies_replied: list["VacanciesResponse"]

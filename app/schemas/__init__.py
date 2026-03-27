@@ -1,5 +1,21 @@
-from .resumes import ResumesBase, ResumesCreate, ResumesResponse, ResumesRelation
-from .workers import WorkersBase, WorkersCreate, WorkersResponse, WorkersRelation
+from .resumes import (
+    ResumesBase,
+    ResumesCreate,
+    ResumesResponse,
+    ResumesRelation,
+)
+from .workers import (
+    WorkersBase,
+    WorkersCreate,
+    WorkersResponse,
+    WorkersRelation,
+)
+from .vacancies import (
+    VacanciesBase,
+    VacanciesCreate,
+    VacanciesResponse,
+    VacanciesRelation,
+)
 
 
 __all__ = [
@@ -11,7 +27,12 @@ __all__ = [
     "WorkersCreate",
     "WorkersResponse",
     "WorkersRelation",
+    "VacanciesBase",
+    "VacanciesCreate",
+    "VacanciesResponse",
+    "VacanciesRelation",
 ]
 
 WorkersRelation.model_rebuild()
 ResumesRelation.model_rebuild()
+VacanciesRelation.model_rebuild()
