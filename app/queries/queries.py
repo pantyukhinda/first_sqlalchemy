@@ -97,3 +97,12 @@ class Queries:
         )
 
         return workers_with_relationship
+
+    @staticmethod
+    def select_resumes_with_all_relationships():
+        select_resumes = (
+            select(Resumes)
+            .options(joinedload(Resumes.worker))
+            .options(selectinload(Resumes.vacancies_replied))
+        )
+        return select_resumes

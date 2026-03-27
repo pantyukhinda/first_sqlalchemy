@@ -10,9 +10,15 @@ from core.crud import (
     async_exec,
     sync_exec,
     async_query_unique,
+    async_query_unique_scalars,
 )
 
-from schemas import ResumesResponse, WorkersResponse, WorkersRelation
+from schemas import (
+    ResumesResponse,
+    WorkersResponse,
+    WorkersRelation,
+    ResumesRelation,
+)
 from data import Data
 from queries import Queries, ComplexDataManipulations
 
@@ -26,80 +32,91 @@ if __name__ == "__main__":
     # Bound resumes and vacancies
     ComplexDataManipulations.bound_vacancies_and_resumes()
 
-# async def main():
-# # * select_resumes_by_workload
-# print(
-#     Queries.select_resumes_by_workload().compile(
-#         compile_kwargs={"literal_binds": True}
-#     )
-# )
 
-# task03 = async_query(Queries.select_resumes_by_workload())
-# resumes = await task03
+async def main():
+    # # * select_resumes_by_workload
+    # print(
+    #     Queries.select_resumes_by_workload().compile(
+    #         compile_kwargs={"literal_binds": True}
+    #     )
+    # )
 
-# for r in resumes:
-#     pprint(r)
+    # task03 = async_query(Queries.select_resumes_by_workload())
+    # resumes = await task03
 
-# # * join_cte_subquery_window_func
-# print(
-#     Queries.join_cte_subquery_window_func().compile(
-#         compile_kwargs={"literal_binds": True}
-#     )
-# )
+    # for r in resumes:
+    #     pprint(r)
 
-# task04 = async_query(Queries.join_cte_subquery_window_func())
-# resumes = await task04
+    # # * join_cte_subquery_window_func
+    # print(
+    #     Queries.join_cte_subquery_window_func().compile(
+    #         compile_kwargs={"literal_binds": True}
+    #     )
+    # )
 
-# for r in resumes:
-#     pprint(r)
+    # task04 = async_query(Queries.join_cte_subquery_window_func())
+    # resumes = await task04
 
-# # * select_workers_with_joined_relationship
-# print(
-#     Queries.select_workers_with_joined_relationship().compile(
-#         compile_kwargs={"literal_binds": True}
-#     )
-# )
-# task05 = async_query_unique(Queries.select_workers_with_joined_relationship())
-# resumes = await task05
+    # for r in resumes:
+    #     pprint(r)
 
-# for r in resumes:
-#     pprint(vars(r[0]))
+    # # * select_workers_with_joined_relationship
+    # print(
+    #     Queries.select_workers_with_joined_relationship().compile(
+    #         compile_kwargs={"literal_binds": True}
+    #     )
+    # )
+    # task05 = async_query_unique(Queries.select_workers_with_joined_relationship())
+    # resumes = await task05
 
-# # * select_workers_with_selectinload_relationship
+    # for r in resumes:
+    #     pprint(vars(r[0]))
 
-# print(
-#     Queries.select_workers_with_selectinload_relationship().compile(
-#         compile_kwargs={"literal_binds": True}
-#     )
-# )
-# task06 = async_query_unique(Queries.select_workers_with_selectinload_relationship())
-# resumes = await task06
+    # # * select_workers_with_selectinload_relationship
 
-# for r in resumes:
-#     pprint(r)
+    # print(
+    #     Queries.select_workers_with_selectinload_relationship().compile(
+    #         compile_kwargs={"literal_binds": True}
+    #     )
+    # )
+    # task06 = async_query_unique(Queries.select_workers_with_selectinload_relationship())
+    # resumes = await task06
 
-# for r in resumes:
-#     pprint(r[0].resumes)
+    # for r in resumes:
+    #     pprint(r)
 
-# # * select_workers and validate via pydantic
-# task07 = async_query(Queries.select_workers())
-# workers = await task07
-# workers_dto = [
-#     WorkersResponse.model_validate(worker["Workers"], from_attributes=True)
-#     for worker in workers
-# ]
-# for w in workers_dto:
-#     pprint(w)
+    # for r in resumes:
+    #     pprint(r[0].resumes)
 
-# # * select_workers_with_relation and validate via pydantic
-# task08 = async_query(Queries.select_workers_with_relation_selectinload())
-# workers_rel = await task08
-# workers_rel_dto = [
-#     WorkersRelation.model_validate(worker, from_attributes=True)
-#     for worker in workers_rel
-# ]
-# for w in workers_rel_dto:
-#     pprint(w)
+    # # * select_workers and validate via pydantic
+    # task07 = async_query(Queries.select_workers())
+    # workers = await task07
+    # workers_dto = [
+    #     WorkersResponse.model_validate(worker["Workers"], from_attributes=True)
+    #     for worker in workers
+    # ]
+    # for w in workers_dto:
+    #     pprint(w)
+
+    # # * select_workers_with_relation and validate via pydantic
+    # task08 = async_query(Queries.select_workers_with_relation_selectinload())
+    # workers_rel = await task08
+    # workers_rel_dto = [
+    #     WorkersRelation.model_validate(worker, from_attributes=True)
+    #     for worker in workers_rel
+    # ]
+    # for w in workers_rel_dto:
+    #     pprint(w)
+
+    # * select_workers_with_relation and validate via pydantic
+    task09 = async_query_unique_scalars(Queries.select_resumes_with_all_relationships())
+    resumes_rel = await task09
+    resumes_rel_dto = [
+        ResumesRelation.model_validate(worker, from_attributes=True)
+        for worker in resumes_rel
+    ]
+    for w in resumes_rel_dto:
+        print(f"{w=}")
 
 
-# asyncio.run(main())
+asyncio.run(main())
