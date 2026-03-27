@@ -16,7 +16,11 @@ update_at = Annotated[
 
 class Base(DeclarativeBase):
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(
+        primary_key=True,
+        autoincrement=True,
+        sort_order=-1,
+    )
 
     def __repr__(self):
         cols = [f"{col}={getattr(self, col)}" for col in self.__table__.columns.keys()]
